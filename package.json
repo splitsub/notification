@@ -1,0 +1,29 @@
+{
+    "name": "dagoso-notification",
+    "version": "1.0.0",
+    "description": "Notification service",
+    "author": "Mayank Ladia",
+    "license": "ISC",
+    "dependencies": {
+        "aws-sdk": "2.831.0",
+        "body-parser": "^1.17.1",
+        "child-process": "^1.0.2",
+        "dotenv": "^8.2.0",
+        "expo-server-sdk": "^3.4.0",
+        "express": "^4.15.2",
+        "moment": "^2.24.0",
+        "moment-timezone": "^0.5.14",
+        "morgan": "^1.9.1",
+        "nodemon": "^2.0.7",
+        "pg": "^8.5.1",
+        "pg-hstore": "^2.3.3",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.2",
+        "sequelize": "^6.5.0",
+        "serialize-javascript": "^5.0.1",
+        "twilio": "^3.57.0"
+    },
+    "devDependencies": {
+        "sequelize-cli": "^6.2.0"
+    }
+}
