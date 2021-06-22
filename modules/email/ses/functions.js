@@ -11,7 +11,7 @@ const Error = require('../../../errorConstants').ERROR;
  * @param {*} reqConfig configuration for the request
  * 
  */
-const configureSES = async(reqConfig) => {
+const configureSES = async (reqConfig) => {
     let awsConfig = reqConfig.aws || {};
     await AWS.config.update({
         region: awsConfig.region,
@@ -42,7 +42,7 @@ const configureSES = async(reqConfig) => {
  * @param {*} emailParams configuration for the request
  * @returns any error that has taken place otherwise the messageID of the email that has been sent 
  */
-const sendNonBulkEmail = async(emailParams, reqConfig) => {
+const sendNonBulkEmail = async (emailParams, reqConfig) => {
     let sesv2Data = await configureSES(reqConfig);
     if (!sesv2Data.success) {
         return sesv2Data;
@@ -72,7 +72,7 @@ const sendNonBulkEmail = async(emailParams, reqConfig) => {
  * 
  * @param data Contains user data for the emails
  */
-const emailAddressParser = async(data) => {
+const emailAddressParser = async (data) => {
     let toAddresses = [];
     for (let i = 0; i < data.email.length; i++) {
         if ((typeof data.email[i] === 'object' && !utils.isValidEmail(data.email[i].emailAddress)) || (!utils.isValidEmail(data.email[i]))) {
@@ -96,7 +96,7 @@ const emailAddressParser = async(data) => {
  * @param data Contains data for the email
  * @param reqConfig Contains config information for the email
  */
-const parseSimpleEmail = async(data, reqConfig) => {
+const parseSimpleEmail = async (data, reqConfig) => {
     let emailAddresses = await emailAddressParser(data.users);
     if (!emailAddresses.success) {
         return emailAddresses
@@ -129,7 +129,7 @@ const parseSimpleEmail = async(data, reqConfig) => {
  * @param data Contains data for the email
  * @param reqConfig Contains config information for the email
  */
-const parseBulkEmail = async(data, reqConfig) => {
+const parseBulkEmail = async (data, reqConfig) => {
     let emailAddresses = await emailAddressParser(data.users);
     if (!emailAddresses.success) {
         return emailAddresses
@@ -138,7 +138,7 @@ const parseBulkEmail = async(data, reqConfig) => {
     let bulkEntries = [];
     let sendToEmails = [];
     for (let i = 0; i < emailAddresses.data.ToAddresses.length; i++) {
-        if (typeof(emailAddresses.data.ToAddresses[i]) === 'string') {
+        if (typeof (emailAddresses.data.ToAddresses[i]) === 'string') {
             sendToEmails = [emailAddresses.data.ToAddresses[i]]
         } else {
             sendToEmails = [emailAddresses.data.ToAddresses[i].emailAddress]
@@ -177,7 +177,7 @@ const parseBulkEmail = async(data, reqConfig) => {
  * @param data Contains data for the email
  * @param reqConfig Contains config information for the email
  */
-const parseRawEmail = async(data, reqConfig) => {
+const parseRawEmail = async (data, reqConfig) => {
     let emailAddresses = await emailAddressParser(data.users);
     if (!emailAddresses.success) {
         return emailAddresses
@@ -227,7 +227,7 @@ const parseRawEmail = async(data, reqConfig) => {
  * 
  * @param params contains the parameters for the email
  */
-const getSendMethod = async(data) => {
+const getSendMethod = async (data) => {
     if ((data.fileURL.length > 0 || data.fileBase64.length > 0) && data.fileName.length > 0) {
         return "raw";
     } else if (data.hasOwnProperty('template') && data.template.templateName !== "") {

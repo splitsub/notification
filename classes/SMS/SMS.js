@@ -3,9 +3,7 @@ const utils = require('../../utils/utils');
 
 /** Class Files */
 const Functions = require('./Functions');
-const NotificationDumpFunctions = require('../NotificationDump/Functions');
 const Constants = require('./Constants');
-const NotificationDumpConstants = require('../NotificationDump/Constants');
 
 /** Third Party Modules */
 const sns = require("../../modules/sms/sns/sns");
@@ -39,9 +37,6 @@ const sendSMS = async (data, reqConfig) => {
         default:
             response.err = Error.send_via_error;
     }
-
-    let responseDump = response.success ? response.data : response.err;
-    NotificationDumpFunctions.postNotificationDump(reqConfig, data, NotificationDumpConstants.TYPE_SMS, responseDump, '');
 
     return utils.classResponse(response.success, response.data, response.err);
 };

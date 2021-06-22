@@ -3,8 +3,6 @@ const utils = require("../../utils/utils");
 
 /** Class Files */
 const Functions = require("./Functions");
-const NotificationDumpFunctions = require('../NotificationDump/Functions');
-const NotificationDumpConstants = require('../NotificationDump/Constants');
 const Constants = require('./Constants');
 
 /** Third Party Modules */
@@ -19,7 +17,7 @@ const Error = require('../../errorConstants').ERROR;
  * @param emailData data of the email that needs to be sent 
  * @param reqConfig configuration of the email
  */
-const sendEmail = async(data, reqConfig) => {
+const sendEmail = async (data, reqConfig) => {
     let validatedRequest = await Functions.validateEmailPayload(data, reqConfig);
     data = validatedRequest.data || {};
     reqConfig = validatedRequest.reqConfig || {};
@@ -32,9 +30,6 @@ const sendEmail = async(data, reqConfig) => {
         default:
             response.err = Error.send_via_error;
     }
-
-    let responseDump = response.success ? response.data : response.err;
-    NotificationDumpFunctions.postNotificationDump(reqConfig, data, NotificationDumpConstants.TYPE_EMAIL, responseDump, '');
 
     return utils.classResponse(response.success, response.data, response.err);
 };
